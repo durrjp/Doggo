@@ -131,3 +131,4 @@ C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Razor\Views\Walkers
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Razor\Views\Walkers\Details.cshtml.g.cs
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Index.cshtml.g.cs
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Details.cshtml.g.cs
+C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Create.cshtml.g.cs
