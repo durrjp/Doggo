@@ -10,16 +10,22 @@ namespace Doggo.Controllers
     public class WalkersController : Controller
     {
         private readonly WalkerRepository _walkerRepo;
+        private readonly NeighborhoodRepository _hoodRepo;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public WalkersController(IConfiguration config)
         {
             _walkerRepo = new WalkerRepository(config);
+            _hoodRepo = new NeighborhoodRepository(config);
         }
         // GET: WalkersController
         public ActionResult Index()
         {
             List<Walker> walkers = _walkerRepo.GetAllWalkers();
+            foreach (Walker walker in walkers)
+            {
+                walker.Neighborhood = _hoodRepo.GetNeighborhoodByWalker(walker.Id);
+            }
 
             return View(walkers);
         }
@@ -28,6 +34,7 @@ namespace Doggo.Controllers
         public ActionResult Details(int id)
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
+            walker.Neighborhood = _hoodRepo.GetNeighborhoodByWalker(id);
 
             if (walker == null)
             {
