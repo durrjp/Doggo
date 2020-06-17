@@ -94,8 +94,14 @@ namespace Doggo.Controllers
             {
                 return NotFound();
             }
+            List<Neighborhood> neighborhoods = _hoodRepo.GetAll();
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = owner,
+                Neighborhoods = neighborhoods
+            };
+            return View(vm);
 
-            return View(owner);
         }
 
         // POST: OwnerController/Edit/5
