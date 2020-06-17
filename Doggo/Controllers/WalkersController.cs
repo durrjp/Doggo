@@ -1,4 +1,5 @@
 ﻿using Doggo.Models;
+using Doggo.Models.ViewModels;
 using Doggo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,12 @@ namespace Doggo.Controllers
             {
                 return NotFound();
             }
+            WalkerViewModel vm = new WalkerViewModel()
+            {
+                Walker = walker
+            };
+
+            return View(vm);
 
             return View(walker);
         }

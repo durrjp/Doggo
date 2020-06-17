@@ -35,7 +35,7 @@
                     @foreach (Dog dog in Model.Dogs)
                     {
                         <div class="card m-4" style="width: 18rem;">
-                            @*@if (String.IsNullOrEmpty(dog.ImageURL))
+                            @if (String.IsNullOrEmpty(dog.ImageURL))
                             {
                                 <img src="https://cdn.pixabay.com/photo/2018/08/15/13/12/dog-3608037_960_720.jpg"
                                      class="card-img-top"
@@ -43,8 +43,8 @@
                             }
                             else
                             {
-                                <img src="@dog.ImageURL" class="card-img-top" alt="Doggo" />
-                            }*@
+                                <img src="~/@dog.ImageURL" class="card-img-top" alt="Doggo" />
+                            }
                             <div class="card-body">
                                 <div>
                                     <label class="font-weight-bold">Name:</label>

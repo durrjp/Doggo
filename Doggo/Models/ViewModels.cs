@@ -19,4 +19,10 @@ namespace Doggo.Models.ViewModels
         public Owner Owner { get; set; }
         public List<Neighborhood> Neighborhoods { get; set; }
     }
+
+    public class WalkerViewModel
+    {
+        public Walker Walker { get; set; }
+        public List<Walks> Walks { get; set; }
+    }
 }

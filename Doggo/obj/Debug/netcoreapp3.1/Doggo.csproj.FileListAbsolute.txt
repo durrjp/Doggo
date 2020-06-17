@@ -423,3 +423,4 @@ C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\staticwebassets\Dog
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.dll
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.pdb
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.genruntimeconfig.cache
+C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.csprojAssemblyReference.cache
