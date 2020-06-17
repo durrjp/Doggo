@@ -2,7 +2,6 @@ C:\Users\durrj\workspace\Doggo\Doggo\bin\Debug\netcoreapp3.1\appsettings.Develop
 C:\Users\durrj\workspace\Doggo\Doggo\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\durrj\workspace\Doggo\Doggo\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\durrj\workspace\Doggo\Doggo\bin\Debug\netcoreapp3.1\Doggo.exe
-C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.csprojAssemblyReference.cache
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.AssemblyInfoInputs.cache
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.AssemblyInfo.cs
 C:\Users\durrj\workspace\Doggo\Doggo\obj\Debug\netcoreapp3.1\Doggo.RazorAssemblyInfo.cache

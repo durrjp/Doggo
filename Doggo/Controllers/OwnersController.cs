@@ -42,9 +42,8 @@ namespace Doggo.Controllers
         public ActionResult Details(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
-            owner.dogs = _dogRepo.GetAllDogsWithOwner(id);
-            List<Dog> dogs = owner.dogs;
-            owner.Neighborhood = _hoodRepo.GetNeighborhoodByOwner(id);
+            List<Dog> dogs = _dogRepo.GetAllDogsWithOwner(owner.Id);
+            owner.dogs = dogs;
             List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
 
             ProfileViewModel vm = new ProfileViewModel()
@@ -60,7 +59,13 @@ namespace Doggo.Controllers
         // GET: OwnerController/Create
         public ActionResult Create()
         {
-            return View();
+            List<Neighborhood> neighborhoods = _hoodRepo.GetAll();
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = new Owner(),
+                Neighborhoods = neighborhoods
+            };
+            return View(vm);
         }
 
         // POST: OwnerController/Create

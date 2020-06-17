@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Doggo.Models;
+using Doggo.Models.ViewModels;
 using Doggo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace Doggo.Controllers
     public class DogController : Controller
     {
         private readonly DogRepository _dogRepo;
+        private readonly OwnerRepository _ownerRepo;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public DogController(IConfiguration config)
         {
             _dogRepo = new DogRepository(config);
+            _ownerRepo = new OwnerRepository(config);
         }
         // GET: DogController
         public ActionResult Index()
@@ -36,23 +39,29 @@ namespace Doggo.Controllers
         // GET: DogController/Create
         public ActionResult Create()
         {
-            return View();
+            List<Owner> owners = _ownerRepo.GetAllOwners();
+            DogFormViewModel vm = new DogFormViewModel()
+            {
+                Dog = new Dog(),
+                Owners = owners
+            };
+            return View(vm);
         }
 
         // POST: DogController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Dog dog)
+        public ActionResult Create(DogFormViewModel vm)
         {
             try
             {
-                _dogRepo.AddDog(dog);
+                _dogRepo.AddDog(vm.Dog);
 
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                return View(dog);
+                return View(vm.Dog);
             }
         }
 
