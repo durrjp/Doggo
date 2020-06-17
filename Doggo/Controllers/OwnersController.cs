@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Doggo.Models;
+using Doggo.Models.ViewModels;
 using Doggo.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace Doggo.Controllers
         private readonly OwnerRepository _ownerRepo;
         private readonly DogRepository _dogRepo;
         private readonly NeighborhoodRepository _hoodRepo;
+        private readonly WalkerRepository _walkerRepo;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public OwnersController(IConfiguration config)
@@ -22,7 +24,8 @@ namespace Doggo.Controllers
             _ownerRepo = new OwnerRepository(config);
             _dogRepo = new DogRepository(config);
             _hoodRepo = new NeighborhoodRepository(config);
-        }
+            _walkerRepo = new WalkerRepository(config);
+    }
         // GET: OwnerController
         public ActionResult Index()
         {
@@ -40,14 +43,18 @@ namespace Doggo.Controllers
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
             owner.dogs = _dogRepo.GetAllDogsWithOwner(id);
+            List<Dog> dogs = owner.dogs;
             owner.Neighborhood = _hoodRepo.GetNeighborhoodByOwner(id);
+            List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
 
-            if (owner == null)
+            ProfileViewModel vm = new ProfileViewModel()
             {
-                return NotFound();
-            }
+                Owner = owner,
+                Dogs = dogs,
+                Walkers = walkers
+            };
 
-            return View(owner);
+            return View(vm);
         }
 
         // GET: OwnerController/Create
