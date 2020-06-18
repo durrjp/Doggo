@@ -157,7 +157,7 @@ namespace Doggo.Repositories
                     cmd.Parameters.AddWithValue("@email", owner.Email);
                     cmd.Parameters.AddWithValue("@phoneNumber", owner.Phone);
                     cmd.Parameters.AddWithValue("@address", owner.Address);
-                    cmd.Parameters.AddWithValue("@neighborhoodId", 1);
+                    cmd.Parameters.AddWithValue("@neighborhoodId", owner.NeighborhoodId);
 
                     int id = (int)cmd.ExecuteScalar();
 

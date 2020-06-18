@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Doggo.Controllers
 {
@@ -13,6 +14,7 @@ namespace Doggo.Controllers
         private readonly WalkerRepository _walkerRepo;
         private readonly NeighborhoodRepository _hoodRepo;
         private readonly WalksRepository _walksRepo;
+        private readonly OwnerRepository _ownerRepo;
 
         // The constructor accepts an IConfiguration object as a parameter. This class comes from the ASP.NET framework and is useful for retrieving things out of the appsettings.json file like connection strings.
         public WalkersController(IConfiguration config)
@@ -20,17 +22,25 @@ namespace Doggo.Controllers
             _walkerRepo = new WalkerRepository(config);
             _hoodRepo = new NeighborhoodRepository(config);
             _walksRepo = new WalksRepository(config);
+            _ownerRepo = new OwnerRepository(config);
         }
         // GET: WalkersController
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.GetAllWalkers();
-            foreach (Walker walker in walkers)
+            int ownerId = GetCurrentUserId();
+            List<Walker> walkers = new List<Walker>();
+            
+            if(ownerId == 0)
             {
-                walker.Neighborhood = _hoodRepo.GetNeighborhoodByWalker(walker.Id);
+                walkers = _walkerRepo.GetAllWalkers();
+                return View(walkers);
             }
-
-            return View(walkers);
+            else
+            {
+                Owner currentUser = _ownerRepo.GetOwnerById(ownerId);
+                walkers = _walkerRepo.GetWalkersInNeighborhood(currentUser.NeighborhoodId);
+                return View(walkers);
+            }
         }
 
         // GET: WalkersController/Details/5
@@ -123,6 +133,18 @@ namespace Doggo.Controllers
             catch
             {
                 return View();
+            }
+        }
+        private int GetCurrentUserId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if(id != null)
+            {
+                return int.Parse(id);
+            }
+            else
+            {
+                return 0;
             }
         }
     }

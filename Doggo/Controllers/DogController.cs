@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Doggo.Models;
 using Doggo.Models.ViewModels;
 using Doggo.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace Doggo.Controllers
         }
         
         // GET: DogController
+        [Authorize]
         public ActionResult Index()
         {
             int ownerId = GetCurrentUserId();
@@ -35,12 +37,14 @@ namespace Doggo.Controllers
         }
 
         // GET: DogController/Details/5
+        [Authorize]
         public ActionResult Details(int id)
         {
             return View();
         }
 
         // GET: DogController/Create
+        [Authorize]
         public ActionResult Create()
         {
             List<Owner> owners = _ownerRepo.GetAllOwners();
@@ -55,10 +59,12 @@ namespace Doggo.Controllers
         // POST: DogController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(DogFormViewModel vm)
         {
             try
             {
+                vm.Dog.OwnerId = GetCurrentUserId();
                 _dogRepo.AddDog(vm.Dog);
 
                 return RedirectToAction("Index");
@@ -70,6 +76,7 @@ namespace Doggo.Controllers
         }
 
         // GET: DogController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Dog dog = _dogRepo.GetDogById(id);
@@ -85,6 +92,7 @@ namespace Doggo.Controllers
         // POST: DogController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(int id, Dog dog)
         {
             try
@@ -100,6 +108,7 @@ namespace Doggo.Controllers
         }
 
         // GET: DogController/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Dog dog = _dogRepo.GetDogById(id);
@@ -110,6 +119,7 @@ namespace Doggo.Controllers
         // POST: DogController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Delete(int id, Dog dog)
         {
             try
