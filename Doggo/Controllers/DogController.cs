@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Doggo.Models;
 using Doggo.Models.ViewModels;
@@ -22,11 +23,14 @@ namespace Doggo.Controllers
             _dogRepo = new DogRepository(config);
             _ownerRepo = new OwnerRepository(config);
         }
+        
         // GET: DogController
         public ActionResult Index()
         {
-            List<Dog> dogs = _dogRepo.GetAllDogs();
-            
+            int ownerId = GetCurrentUserId();
+
+            List<Dog> dogs = _dogRepo.GetAllDogsWithOwner(ownerId);
+
             return View(dogs);
         }
 
@@ -118,6 +122,11 @@ namespace Doggo.Controllers
             {
                 return View(dog);
             }
+        }
+        private int GetCurrentUserId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }
