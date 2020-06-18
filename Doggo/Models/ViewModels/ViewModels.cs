@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Doggo.Models.ViewModels
 {
@@ -17,6 +16,7 @@ namespace Doggo.Models.ViewModels
     public class OwnerFormViewModel
     {
         public Owner Owner { get; set; }
+        public List<Dog> Dogs { get; set; }
         public List<Neighborhood> Neighborhoods { get; set; }
     }
 
@@ -24,5 +24,6 @@ namespace Doggo.Models.ViewModels
     {
         public Walker Walker { get; set; }
         public List<Walks> Walks { get; set; }
+        public int TotalWalksDuration { get; set; }
     }
 }

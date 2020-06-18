@@ -1,4 +1,4 @@
-﻿@model Doggo.Models.Walker
+﻿@model Doggo.Models.ViewModels.WalkerViewModel;
 
 @{
     ViewData["Title"] = "Details";
@@ -10,29 +10,55 @@
     <h4>Walker</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Walker.Id)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Walker.Id)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Walker.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Walker.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Neighborhood
         </dt>
-        <dd class = "col-sm-10">
-            @Model.Neighborhood.Name
+        <dd class="col-sm-10">
+            @Model.Walker.Neighborhood.Name
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Walker.ImageUrl)
         </dt>
-        <dd class = "col-sm-10">
-            <img class="bg-info" src="@Model.ImageUrl" alt="avatar" />
+        <dd class="col-sm-10">
+            <img class="bg-info" width="100" src="@Model.Walker.ImageUrl" alt="avatar" />
+        </dd>
+        <dt class="col-sm-2">
+            Walks
+        </dt>
+        <dd>
+            <table style="width:100%">
+                <tr>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Duration</th>
+                </tr>
+                @foreach (Walks walk in Model.Walks)
+                {
+                    <tr>
+                        <td>@walk.Date</td>
+                        <td>@walk.Owner.Name</td>
+                        <td>@walk.Duration min</td>
+                    </tr>
+                }
+            </table>
+        </dd>
+        <dt>
+            Total Walk Time
+        </dt>
+        <dd>
+            @Model.TotalWalksDuration
         </dd>
     </dl>
 </div>

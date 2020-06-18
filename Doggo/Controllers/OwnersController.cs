@@ -39,16 +39,13 @@ namespace Doggo.Controllers
         public ActionResult Details(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
-            List<Dog> dogs = _dogRepo.GetAllDogsWithOwner(owner.Id);
-            owner.dogs = dogs;
-            List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
 
             ProfileViewModel vm = new ProfileViewModel()
             {
-                Owner = owner,
-                Dogs = dogs,
-                Walkers = walkers
-            };
+                Owner = _ownerRepo.GetOwnerById(id),
+                Dogs = _dogRepo.GetAllDogsWithOwner(owner.Id),
+                Walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId)
+        };
 
             return View(vm);
         }

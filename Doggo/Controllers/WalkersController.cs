@@ -38,6 +38,15 @@ namespace Doggo.Controllers
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
             walker.Neighborhood = _hoodRepo.GetNeighborhoodByWalker(id);
+            List<Walks> walks = _walksRepo.GetWalksByWalker(walker.Id);
+            int totalWalksDuration = 0;
+            foreach(Walks walk in walks)
+            {
+                walk.Duration = walk.Duration / 60;
+                totalWalksDuration += walk.Duration;
+            }
+
+
 
             if (walker == null)
             {
@@ -46,7 +55,8 @@ namespace Doggo.Controllers
             WalkerViewModel vm = new WalkerViewModel()
             {
                 Walker = walker,
-                Walks = _walksRepo.GetWalksByWalker()
+                Walks = walks,
+                TotalWalksDuration = totalWalksDuration
             };
 
             return View(vm);

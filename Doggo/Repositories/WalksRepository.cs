@@ -1,7 +1,6 @@
 ﻿using Doggo.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Collections.Generic;
 
 namespace Doggo.Repositories
@@ -31,7 +30,7 @@ namespace Doggo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT wks.Id AS WalkId, Date, Duration, WalkerId, DogId
+                        SELECT wks.Id AS WalkId, Date, Duration, WalkerId, DogId,
                         d.Id AS DogId, OwnerId,
                         o.Id AS OId, o.Name AS OName
                         FROM Walks wks
