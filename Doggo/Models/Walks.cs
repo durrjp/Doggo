@@ -14,5 +14,6 @@ namespace Doggo.Models
         public Walker Walker { get; set; }
         public int DogId { get; set; }
         public Dog Dog { get; set; }
+        public Owner Owner { get; set; }
     }
 }
