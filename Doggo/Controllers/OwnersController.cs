@@ -57,29 +57,31 @@ namespace Doggo.Controllers
         // GET: OwnerController/Create
         public ActionResult Create()
         {
-            List<Neighborhood> neighborhoods = _hoodRepo.GetAll();
+
             OwnerFormViewModel vm = new OwnerFormViewModel()
             {
                 Owner = new Owner(),
-                Neighborhoods = neighborhoods
+                Neighborhoods = _hoodRepo.GetAll()
             };
+
             return View(vm);
         }
 
         // POST: OwnerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Owner owner)
+        public ActionResult Create(OwnerFormViewModel vm)
         {
             try
             {
-                _ownerRepo.AddOwner(owner);
+                _ownerRepo.AddOwner(vm.Owner);
 
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                return View(owner);
+                vm.Neighborhoods = _hoodRepo.GetAll();
+                return View(vm);
             }
         }
 

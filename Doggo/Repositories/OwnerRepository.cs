@@ -149,7 +149,7 @@ namespace Doggo.Repositories
                 {
                     cmd.CommandText = @"
                     INSERT INTO Owner ([Name], Email, Phone, Address, NeighborhoodId)
-                    OUTPUT INSERTED.id
+                    OUTPUT INSERTED.Id
                     VALUES (@name, @email, @phoneNumber, @address, @neighborhoodId);
                 ";
 
