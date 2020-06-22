@@ -1,5 +1,6 @@
 ﻿
 using Doggo.Models;
+using Doggo.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -40,24 +41,14 @@ namespace Doggo.Repositories
                     List<Dog> dogs = new List<Dog>();
                     while (reader.Read())
                     {
-                        string notes = "";
-                        string image = "";
-                        if (!reader.IsDBNull(reader.GetOrdinal("Notes")))
-                        {
-                            notes = reader.GetString(reader.GetOrdinal("Notes"));
-                        }
-                        if (!reader.IsDBNull(reader.GetOrdinal("ImageURL")))
-                        {
-                            image = reader.GetString(reader.GetOrdinal("ImageURL"));
-                        }
                         Dog dog = new Dog
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            Notes = notes,
-                            ImageURL = image
+                            Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
+                            ImageURL = ReaderHelpers.GetNullableString(reader, "ImageURL")
                         };
 
                         dogs.Add(dog);
@@ -90,24 +81,14 @@ namespace Doggo.Repositories
                     List<Dog> dogs = new List<Dog>();
                     while (reader.Read())
                     {
-                        string notes = "";
-                        string image = "";
-                        if(!reader.IsDBNull(reader.GetOrdinal("Notes")))
-                        {
-                            notes = reader.GetString(reader.GetOrdinal("Notes"));
-                        }
-                        if(!reader.IsDBNull(reader.GetOrdinal("ImageURL")))
-                        {
-                            image = reader.GetString(reader.GetOrdinal("ImageURL"));
-                        }
                         Dog dog = new Dog
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("DogId")),
                             Name = reader.GetString(reader.GetOrdinal("DogName")),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            Notes = notes,
-                            ImageURL = image
+                            Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
+                            ImageURL = ReaderHelpers.GetNullableString(reader, "ImageURL")
                         };
 
                         dogs.Add(dog);
@@ -135,8 +116,8 @@ namespace Doggo.Repositories
                     cmd.Parameters.AddWithValue("@name", dog.Name);
                     cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
                     cmd.Parameters.AddWithValue("@breed", dog.Breed);
-                    cmd.Parameters.AddWithValue("@notes", dog.Notes);
-                    cmd.Parameters.AddWithValue("@imageURL", dog.ImageURL);
+                    cmd.Parameters.AddWithValue("@notes", dog.Notes ?? "");
+                    cmd.Parameters.AddWithValue("@imageUrl", dog.ImageURL ?? "");
 
                     int id = (int)cmd.ExecuteScalar();
 
@@ -163,24 +144,14 @@ namespace Doggo.Repositories
 
                     if (reader.Read())
                     {
-                        string notes = "";
-                        string image = "";
-                        if (!reader.IsDBNull(reader.GetOrdinal("Notes")))
-                        {
-                            notes = reader.GetString(reader.GetOrdinal("Notes"));
-                        }
-                        if (!reader.IsDBNull(reader.GetOrdinal("ImageURL")))
-                        {
-                            image = reader.GetString(reader.GetOrdinal("ImageURL"));
-                        }
                         Dog dog = new Dog
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
                             Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                            Notes = notes,
-                            ImageURL = image
+                            Notes = ReaderHelpers.GetNullableString(reader, "Notes"),
+                            ImageURL = ReaderHelpers.GetNullableString(reader, "ImageURL")
                         };
                         reader.Close();
                         return dog;
